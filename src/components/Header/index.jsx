@@ -4,7 +4,7 @@ import React from 'react';
 function Header(props) {
   return (
     <Container w="full" maxW="container.xl">
-      <HStack w="full" justify="space-between" pt={20} pb={10}>
+      <HStack w="full" justify="space-between" pt={{base: 10, md: 20}} pb={10}>
           <Heading size="xl">
             Auto Money
           </Heading>

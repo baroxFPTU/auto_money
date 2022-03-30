@@ -6,7 +6,7 @@ import ExpenseCategory from '../components/ExpenseCategory';
 function Expenses(props) {
   return (
     <>
-    <Flex w="full" h="full" py={10} columnGap={12}>
+    <Flex w="full" h="full" py={{base: 0, md: 10}} columnGap={12} direction={{base: "column", md: "row"}}>
       <ExpenseForm/>
       <ExpenseCategory/>
     </Flex>

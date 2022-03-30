@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, HStack, Input, Select, VStack } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, HStack, Input, Select, VStack } from '@chakra-ui/react';
 import { updateBudget, updateCurrency } from 'features/Expense/slice/expenseSlice';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +42,7 @@ function ExpenseForm(props) {
     });
   }
   return (
-    <VStack w="full" justify="space-between" align="center" py={6} spacing={40}>
+    <VStack w="full" justify="space-between" align="center" py={6} spacing={{base: 6, md: 40}}>
       <VStack w="full" spacing={4}>
         <ExpenseInput value={budget} onChange={handleChangeBudget}/>
         <HStack w="full">
@@ -60,7 +60,9 @@ function ExpenseForm(props) {
           </FormControl>
         </HStack>
       </VStack>
-      <Button size="lg" w="full" onClick={handleSubmit}>Save</Button>
+      <Box  w="full" pos={{base: "fixed", md: "relative"}} bottom="0" p={{base: 5, md: 0}}>
+        <Button  size="lg" w="full" onClick={handleSubmit}>Save</Button>
+      </Box>
     </VStack>
   );
 }

@@ -1,7 +1,8 @@
-import { Divider, HStack, Text, VStack } from '@chakra-ui/react';
+import { Box, Divider, HStack, Text, VStack } from '@chakra-ui/react';
 import { updateConfig } from 'features/Expense/slice/expenseSlice';
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { formatCurrencies } from 'utils/currency';
 import InputPercent from '../InputPercent';
 
 function ExpenseItem({name, id, percent, currency}) {
@@ -32,10 +33,12 @@ function ExpenseItem({name, id, percent, currency}) {
   return (
     <VStack w="full" align="flex-start" p={4} spacing={3}>
     <HStack w="full"  justify="space-between">
-      <Text fontSize="xl">{name}</Text>
+      <Box>
+        <Text fontSize="xl">{name}</Text>
+        <Text fontSize="2xl" as="b">{formatedAmount}</Text>
+      </Box>
       <InputPercent ref={inputRef} percent={percent} handleChange={handleChangePercent}/>
     </HStack>
-    <Text fontSize="2xl" as="b">{formatedAmount}</Text>
     <Divider/>
   </VStack>
   );

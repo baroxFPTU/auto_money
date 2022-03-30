@@ -6,7 +6,7 @@ function Layout({children}) {
   return (
     <>
     <Header/>
-     <Container maxW="container.xl" >
+     <Container maxW="container.xl">
         {children}
      </Container>
     </>
