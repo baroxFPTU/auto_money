@@ -2,18 +2,17 @@ import { Box, Button, FormControl, FormLabel, HStack, Input, Select, VStack } fr
 import { updateBudget, updateCurrency } from 'features/Expense/slice/expenseSlice';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOriginal, formatCurrencies } from 'utils/currency';
+import useFirestore from 'store/hooks/useFirestore';
+import { formatCurrencies, getOriginal } from 'utils/currency';
+import { generateId, slugify } from 'utils/main';
 import ExpenseInput from '../ExpenseInput';
 
 function ExpenseForm(props) {
+  const {add: addDoc} = useFirestore('expenses');
   const [budget, setBudget] = useState('');
   const expense = useSelector(state => state.expense);
   const dispatch = useDispatch();
-  const [info, setInfo] = useState({
-    title: '',
-    currency: 'VND',
-  });
-
+  const [title, setTitle] = useState('');
   const handleChangeBudget = (budget) => {
     const formatedBudget = formatCurrencies(budget);
     const action = updateBudget(getOriginal(budget));
@@ -28,18 +27,23 @@ function ExpenseForm(props) {
     if (key === 'currency') {
       const action = updateCurrency(data);
       dispatch(action);
+      return;
     }
-
-    setInfo(prevState => ({...prevState, [key]: data}));
+    setTitle(data);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const id = `${slugify(title)}-${generateId()}`;
+    const data = {
+      title: title,
+      id: id,  
+      data: {
+        ...expense
+      }
+    }
 
-    console.log({
-      ...info,
-      expense
-    });
+    addDoc(data);
   }
   return (
     <VStack w="full" justify="space-between" align="center" py={6} spacing={{base: 6, md: 40}}>
@@ -48,11 +52,11 @@ function ExpenseForm(props) {
         <HStack w="full">
           <FormControl>
             <FormLabel>Title</FormLabel>
-            <Input  size="lg" placeholder="Expense March" value={info.title} name="title" onChange={handleChangeField}/>
+            <Input  size="lg" placeholder="Expense March" value={title} name="title" onChange={handleChangeField}/>
           </FormControl>
           <FormControl>
             <FormLabel>Currencies</FormLabel>
-            <Select size="lg" name="currency" onChange={handleChangeField} defaultValue={info.currency}>
+            <Select size="lg" name="currency" onChange={handleChangeField} defaultValue={expense.currency}>
               <option value="USD">USD</option>
               <option value="EUR">EUR</option>
               <option value="VND">VND</option>
