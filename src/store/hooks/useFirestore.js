@@ -4,6 +4,7 @@ import { collectionRef, dbFirestore } from "../../firebase";
 
 
 function useFirestore(colName) {
+  const [status, setStatus] = useState(null);
   const [snapshot, setSnapshot] = useState(null);
   const colRef = collectionRef(colName);
 
@@ -19,10 +20,12 @@ function useFirestore(colName) {
     });
   }, []);
 
-  const add = async (data) => {
+  const add = async (colRefCustom = null, data) => {
     if (!data) return;
     try {
-      await addDoc(colRef, data);
+      const response = await addDoc(colRefCustom || colRef, data);
+      if (!response) throw new Error('Cannot add new expense.');
+      setStatus('success');
     } catch (error) {
       console.log(error);
     }
@@ -31,6 +34,7 @@ function useFirestore(colName) {
   return {
     snapshot,
     add,
+    status
   };
 }
 

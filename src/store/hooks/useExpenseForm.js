@@ -1,17 +1,20 @@
+import { useToast } from "@chakra-ui/react";
 import { updateBudget, updateCurrency } from "features/Expense/slice/expenseSlice";
-import { useCallback, useState } from "react";
+import { collection } from "firebase/firestore";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { formatCurrencies, getOriginal } from "utils/currency";
 import { generateId, slugify } from "utils/main";
+import { dbFirestore } from "../../firebase";
+import { openModal } from '../slices/uiSlice';
 import useFirestore from "./useFirestore";
-import {openModal} from '../slices/uiSlice';
 
 function useExpenseForm() {
-  const {add: addDoc} = useFirestore('expenses');
+  const {add: addDoc, status} = useFirestore('expenses');
   const expense = useSelector(state => state.expense);
-  const isSignedIn = useSelector(state => state.auth.isSignedIn);
+  const {isSignedIn, user} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
+  const toast = useToast();
 
   const handleChangeInfo = (e) => {
     const data = e.target.value;
@@ -25,9 +28,9 @@ function useExpenseForm() {
     setTitle(data);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isSignedIn) {
+    if (!isSignedIn && !user) {
       return dispatch(openModal());
     }
 
@@ -40,7 +43,19 @@ function useExpenseForm() {
       }
     }
 
-    addDoc(data);
+    try {
+      const colRef = await collection(dbFirestore ,`expenses/${user.uid}/list`);
+      addDoc(colRef, data);
+      toast({
+        title: 'Saved',
+        description: "New expense is saved. You can check it later.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      
+    }
   }
 
   return {

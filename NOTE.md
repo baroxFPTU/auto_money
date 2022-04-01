@@ -3,7 +3,9 @@
 1. Calculate & Show amount after divide.
 2. Tweak the amount & auto re-calc percent of other part.
 3. Responsive
-4. Login by Google || Facebook to save data.
+- add more options for budget.
+
+4. Login by Google || Facebook to save data.!!
 
 ### Advance
 1. Visualize with chart
@@ -29,6 +31,14 @@ HOW
   ```
 3. Show.
 
+### Object data Expenses
+```js
+const expense = {
+  id: generateId(),
+  name: String,
+  data: Object
+}
+```
 
 ## Keywords
 1. Expense
