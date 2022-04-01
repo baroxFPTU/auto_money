@@ -1,30 +1,12 @@
-import{ createSlice } from "@reduxjs/toolkit";
-import { generateId, slugify } from "utils/main";
-
-const budgetConfig = [
-  {
-    name: 'Foods',
-    id: 'foods-9421554b',
-    percent: 50
-  },
-  {
-    name: 'Save',
-    id: 'save-bd26dd82',
-    percent: 20
-  },
-  {
-    name: 'Invest',
-    id: 'invest-fb9aa208',
-    percent: 20
-  }
-];
+import { createSlice } from "@reduxjs/toolkit";
+import { BUDGET_CONFIG_DEFAULT } from "constant/global";
 
 const expenseSlice = createSlice({
   name: "expense",
   initialState: {
     budget: 0,
     currency: 'VND',
-    config: [...budgetConfig]
+    config: [...BUDGET_CONFIG_DEFAULT]
   },
   reducers: {
     updateBudget: (state, action) => {

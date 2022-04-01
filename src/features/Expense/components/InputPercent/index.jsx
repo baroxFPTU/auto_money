@@ -15,10 +15,7 @@ function InputPercent({percent, handleChange}, ref) {
     handleChange(ref.current.value, setValue);
   }
 
-  const handleChangeValue = (value) => {
-    console.log('run');
-    setValue(value);
-  }
+  const handleChangeValue = (value) => {setValue(value);}
 
   return (
     <HStack maxW="100px" >
