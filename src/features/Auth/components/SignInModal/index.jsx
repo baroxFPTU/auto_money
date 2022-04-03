@@ -15,26 +15,21 @@ import useAuth from 'store/hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { signIn } from 'features/Auth/authSlice';
 import { closeModal } from 'store/slices/uiSlice';
+import useCustomToast from 'store/hooks/useCustomToast';
 
 function SignInModal(props) {
   const dispatch = useDispatch();
-  const toast = useToast();
+  const {success} = useCustomToast();
   const updateUser = useCallback((user) => {
     if (!user) return;
     dispatch(signIn(user));
     dispatch(closeModal());
-    toast({
-      position: 'top',
+    success({
       title: `What\'s up, ${user.displayName} `,
       description: "Sign in successful.",
-      status: 'success',
-      duration: 2000,
-      isClosable: true,
     });
   },[]);
-  const {user, signInWithGoogle, signInWithFacebook} = useAuth(updateUser);
-
-
+  const {signInWithGoogle, signInWithFacebook} = useAuth(updateUser);
 
   return (
     <Modal  {...props}>

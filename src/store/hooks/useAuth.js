@@ -1,16 +1,20 @@
-import { FacebookAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { signOutLocal } from 'features/Auth/authSlice';
+import { FacebookAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from 'firebase/auth';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 function useAuth(callback) {
+  const counter = useRef(0);
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-  const counter = useRef(0);
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
 
   useEffect(() => {
+    if (!callback) return;
     if (user && counter.current < 1) {
       callback(user);
       counter.current++;
@@ -23,7 +27,7 @@ function useAuth(callback) {
       const userData = {
         uid: user.uid,
         displayName: user.displayName,
-        photoUrl: user.photoUrl,
+        photoURL: user.photoURL,
       }
       setUser(userData);
     })
@@ -50,7 +54,7 @@ function useAuth(callback) {
       const userData = {
         uid: response.user.uid,
         displayName: response.user.displayName,
-        photoUrl: response.user.photoUrl,
+        photoURL: response.user.photoURL,
       }
       
       setUser(userData);
@@ -66,8 +70,15 @@ function useAuth(callback) {
   const signInWithFacebook = useCallback(async () => {
     signIn('facebook');
   }, []);
+
+  const signOutBoth = useCallback(async () => {
+    const response = await signOut(auth);
+    const action = signOutLocal();
+    dispatch(action);
+    callback();
+  })
   
-  return {user, signInWithGoogle, signInWithFacebook};
+  return {user, signInWithGoogle, signInWithFacebook, signOut: signOutBoth};
 }
 
 export default useAuth;

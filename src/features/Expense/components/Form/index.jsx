@@ -1,7 +1,7 @@
 import { Box, Button, HStack, Input, VStack } from '@chakra-ui/react';
 import { CURRENCY_OPTIONS } from 'constant/global';
 import { updateBudget } from 'features/Expense/slice/expenseSlice';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useExpenseForm from 'store/hooks/useExpenseForm';
 import { formatCurrencies, getOriginal } from 'utils/currency';
@@ -10,7 +10,7 @@ import CustomFormSelection from '../CustomFormSelection';
 import ExpenseInput from '../ExpenseInput';
 
 function Form(props) {
-  const { title, currency, updateTitle, updateCurrency, handleSubmit } = useExpenseForm();
+  const { status, title, currency, updateTitle, updateCurrency, handleSubmit } = useExpenseForm();
   const [budget, setBudget] = useState('');
   const dispatch = useDispatch();
   const handleChangeBudget = (budget) => {
@@ -20,10 +20,16 @@ function Form(props) {
     setBudget(formatedBudget);
   }
 
+  useEffect(() => {
+    if (status === 'reset') {
+      handleChangeBudget('');
+    }
+  });
+
   return (
     <VStack w="full" justify="space-between" align="center" py={6} spacing={{base: 6, md: 40}}>
       <VStack w="full" spacing={4}>
-        <CustomFormControl label="Your budget">
+        <CustomFormControl label="Your money">
           <ExpenseInput value={budget} onChange={handleChangeBudget}/>
         </CustomFormControl>
         <HStack w="full">
@@ -44,7 +50,7 @@ function Form(props) {
         </HStack>
       </VStack>
       <Box w="full" pos={{base: "fixed", md: "relative"}} bottom="0" p={{base: 5, md: 0}}>
-        <Button  size="lg" w="full" onClick={handleSubmit}>Save</Button>
+        <Button size="lg" w="full" onClick={handleSubmit}>Save</Button>
       </Box>
     </VStack>
   );

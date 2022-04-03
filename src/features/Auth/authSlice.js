@@ -12,7 +12,7 @@ const authSlice = createSlice({
       state.isSignedIn = true;
       state.user = {...action.payload};
     },
-    signOut: (state) => {
+    signOutLocal: (state) => {
       state.isSignedIn = false;
       state.user = null;
     }
@@ -20,5 +20,5 @@ const authSlice = createSlice({
 });
 
 const {actions, reducer: authReducer} = authSlice;
-export const {signIn, signOut} = actions;
+export const {signIn, signOutLocal} = actions;
 export default authReducer;
