@@ -76,7 +76,7 @@ function useAuth(callback) {
     const action = signOutLocal();
     dispatch(action);
     callback();
-  })
+  });
   
   return {user, signInWithGoogle, signInWithFacebook, signOut: signOutBoth};
 }

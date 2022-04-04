@@ -1,11 +1,11 @@
 ## Features
 ### Basic
-1. Calculate & Show amount after divide.
-2. Tweak the amount & auto re-calc percent of other part.
-3. Responsive
+1. Calculate & Show amount after divide. - done
+2. Tweak the amount & auto re-calc percent of other part. - done
+3. Responsive - done
 - add more options for budget.
 
-4. Login by Google || Facebook to save data.!!
+4. Login by Google || Facebook to save data.!! - done
 
 ### Advance
 1. Visualize with chart
@@ -47,3 +47,8 @@ const expense = {
 4. Income
 5. Budget Rule
 6. Allocate
+
+TODO 2022 04 04
+1. Fix the direction of menu popup.
+2. Them chuc nang add more custom field.
+3. 

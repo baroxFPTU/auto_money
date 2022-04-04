@@ -1,4 +1,4 @@
-import { Container, Heading, HStack } from '@chakra-ui/react';
+import { Container, Heading, HStack, Switch } from '@chakra-ui/react';
 import MenuCustom from 'components/MenuCustom';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,10 @@ function Header(props) {
           <Heading size="xl">
             Auto Money
           </Heading>
-         <MenuCustom isSignedIn={isSignedIn} photoURL={photoURL}/>
+          <HStack columnGap={4}>
+            <Switch size='lg'/>
+            <MenuCustom marginLeft={10} isSignedIn={isSignedIn} photoURL={photoURL}/>
+          </HStack>
       </HStack>
     </Container>
   );
