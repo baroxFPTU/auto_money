@@ -1,27 +1,23 @@
-import React, { useCallback, useEffect } from 'react';
-import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import {
   Button, Heading, Icon,
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useToast,
-  VStack
+  ModalContent, ModalOverlay,
+  Text, VStack
 } from '@chakra-ui/react';
-import useAuth from 'store/hooks/useAuth';
-import { useDispatch } from 'react-redux';
 import { signIn } from 'features/Auth/authSlice';
-import { closeModal } from 'store/slices/uiSlice';
+import React, { useCallback, memo } from 'react';
+import { FaFacebook, FaGoogle } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import useAuth from 'store/hooks/useAuth';
 import useCustomToast from 'store/hooks/useCustomToast';
+import { closeModal } from 'store/slices/uiSlice';
 
 function SignInModal(props) {
   const dispatch = useDispatch();
   const {success} = useCustomToast();
-  const updateUser = useCallback((user) => {
+  const updateUser = (user) => {
     if (!user) return;
     dispatch(signIn(user));
     dispatch(closeModal());
@@ -29,15 +25,17 @@ function SignInModal(props) {
       title: `What\'s up, ${user.displayName} `,
       description: "Sign in successful.",
     });
-  },[]);
-  const {signInWithGoogle, signInWithFacebook} = useAuth(updateUser);
+  };
+  const { signInWithGoogle, signInWithFacebook } = useAuth(updateUser);
 
   return (
     <Modal  {...props}>
-      <ModalOverlay bg='none'
-      backdropFilter='auto'
-      backdropInvert='10%'
-      backdropBlur='2px'/>
+      <ModalOverlay
+        bg='none'
+        backdropFilter='auto'
+        backdropInvert='10%'
+        backdropBlur='2px'
+      />
       <ModalContent>
         <ModalCloseButton/>
         <ModalBody display="flex" alignItems="center">
@@ -57,4 +55,4 @@ function SignInModal(props) {
   );
 }
 
-export default SignInModal;
+export default memo(SignInModal);

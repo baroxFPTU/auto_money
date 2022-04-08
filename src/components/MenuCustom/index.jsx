@@ -8,6 +8,7 @@ import useCustomToast from 'store/hooks/useCustomToast';
 import { useDispatch } from 'react-redux';
 import { openModal } from 'store/slices/uiSlice';
 import anonymousAvatar from 'icons/anonymous.svg';
+import { Link } from 'react-router-dom';
 
 function MenuCustom({isSignedIn, photoURL}) {
   const dispatch = useDispatch();
@@ -44,7 +45,10 @@ function MenuCustom({isSignedIn, photoURL}) {
           photoURL={photoURL || anonymousAvatar}/>
       </MenuButton>
       <MenuList>
-        <MenuItem icon={<FaColumns/>}>
+      <MenuItem icon={<FaColumns/>} as={Link} to="/">
+          Home
+        </MenuItem>
+        <MenuItem icon={<FaColumns/>} as={Link} to="/dashboard">
           Dashboard
         </MenuItem>
         <MenuItem icon={iconSignInOut} onClick={handleClick}>

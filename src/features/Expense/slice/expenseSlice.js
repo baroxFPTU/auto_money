@@ -20,10 +20,14 @@ const expenseSlice = createSlice({
       const newPercent = action.payload.percent;
       const expenseTarget = state.config.find(expense => expense.id === expenseId);
       expenseTarget.percent = newPercent;
+    },
+    addConfig: (state, action) => {
+      const newConfig = action.payload;
+      state.config.push(newConfig);
     }
   }
 });
 
 const { actions, reducer: expenseReducer} = expenseSlice;
-export const { updateBudget, updateCurrency, updateConfig } = actions;
+export const { updateBudget, updateCurrency, updateConfig, addConfig } = actions;
 export default expenseReducer;

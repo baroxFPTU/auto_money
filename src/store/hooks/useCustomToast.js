@@ -5,7 +5,7 @@ function useCustomToast(duration, isClosable) {
   const defaultConfig = {
     position: 'top',
     variant: 'subtle',
-    duration: duration || 3000,
+    duration: duration || 2000,
     isClosable: isClosable || true,
   }
 

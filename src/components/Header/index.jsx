@@ -2,6 +2,8 @@ import { Container, Heading, HStack, Switch } from '@chakra-ui/react';
 import MenuCustom from 'components/MenuCustom';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 function Header(props) {
   const isSignedIn = useSelector(state => state.auth.isSignedIn)
@@ -10,11 +12,13 @@ function Header(props) {
   return (
     <Container w="full" maxW="container.xl">
       <HStack w="full" justify="space-between" pt={{base: 10, md: 20}} pb={10}>
+        <Link to="/">
           <Heading size="xl">
             Auto Money
           </Heading>
+        </Link>
           <HStack columnGap={4}>
-            <Switch size='lg'/>
+            <Switch size="md"/>
             <MenuCustom marginLeft={10} isSignedIn={isSignedIn} photoURL={photoURL}/>
           </HStack>
       </HStack>
