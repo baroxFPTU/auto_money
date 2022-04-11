@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { collection, serverTimestamp } from "firebase/firestore";
+import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 import { updateBudget, updateCurrency } from "features/Expense/slice/expenseSlice";
 import { generateId, slugify } from "utils/main";
@@ -61,9 +61,9 @@ function useExpenseForm() {
     }
 
     try {
-      const colRef = collection(dbFirestore ,`expenses/${user.uid}/lists`);
-      const response = await addDoc(colRef, data);
-      if (!response) throw new Error('Something went wrong. Please try again.');
+      const docRef = doc(dbFirestore ,`expenses/${user.uid}/lists`, data.id);
+      await setDoc(docRef,data);
+
       setTitle('');
       setStatus('reset');
       success({
@@ -71,9 +71,10 @@ function useExpenseForm() {
         description: "New expense is saved. You can check it later.",
       });
     } catch (error) {
+      console.log(error.message);
       errorToast({
         title: 'Failed',
-        description: error.message,
+        description: "Cannot add expense. Please try again.",
       });
     }
   }

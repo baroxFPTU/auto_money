@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import SignInModal from "features/Auth/components/SignInModal";
 import PrivateRoute from "features/Auth/routes/PrivateRoute";
 import Dashboard from "features/Expense/pages/Dashboard";
+import EditBudget from "features/Expense/pages/EditBudget";
 import Expense from "features/Expense/pages/Expense";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
@@ -23,6 +24,9 @@ function App() {
         <Route element={<PrivateRoute/>}>
             <Route path="/" element={<Expense/>}/>
             <Route path="/dashboard" element={<Dashboard/>}/>
+            <Route path="/budgets">
+              <Route path=":budgetId" element={<EditBudget/>}/>
+            </Route>
         </Route>
     </Routes>
     <SignInModal isCentered size={modalSize} onClose={handleCloseModal} isOpen={isOpenModal}/>

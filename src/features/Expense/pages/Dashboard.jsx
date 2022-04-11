@@ -4,7 +4,6 @@ import { collection } from 'firebase/firestore';
 import React, { useEffect, memo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useFirestore from 'store/hooks/useFirestore';
-import moment from 'moment';
 import TableBodyRow from '../components/Table/TableBodyRow';
 
 const Dashboard = () => {
@@ -17,7 +16,6 @@ const Dashboard = () => {
       const colRef = collection(dbFirestore ,`expenses/${user?.uid}/lists`);
       if (colRef){
         const docData = await getAll(colRef);
-        console.log(docData);
         setData(docData);
       };
     }
@@ -42,6 +40,7 @@ const Dashboard = () => {
             {data && data.map((item, index) =>
               <TableBodyRow
                 key={index}
+                id={item.id}
                 name={item.title}
                 amount={item.data.budget}
                 currency={item.data.currency}

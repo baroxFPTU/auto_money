@@ -1,10 +1,12 @@
-import { addDoc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
+import { addDoc, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { convertArrayDocs } from "utils/firebase";
-import { collectionRef } from "../../firebase";
+import { collectionRef, dbFirestore } from "../../firebase";
 
 
 function useFirestore(colName = 'expenses') {
+  const user = useSelector(state => state.auth.user);
   const [snapshot, setSnapshot] = useState(null);
   const colRef = collectionRef(colName);
 
@@ -14,6 +16,11 @@ function useFirestore(colName = 'expenses') {
       setSnapshot(responseData);
     });
   }, []);
+
+  const getDocRef = (docId) => {
+    if (!docId) return null;
+    return doc(dbFirestore ,`expenses/${user.uid}/lists`, docId);
+  }
 
   const add = async (colRefCustom = colRef, data) => {
     if (!data) return;
@@ -43,12 +50,21 @@ function useFirestore(colName = 'expenses') {
     const arrayDocs = convertArrayDocs(response.docs);
     return arrayDocs;
   }
+
+  const getById = async (docId = null) => {
+    if (!docId) return;
+    const docRef = getDocRef(docId);
+    const response = await getDoc(docRef);
+    return response;
+  }
   
   return {
     snapshot,
     add,
     update,
-    getAll
+    getAll,
+    getById,
+    getDocRef
   };
 }
 

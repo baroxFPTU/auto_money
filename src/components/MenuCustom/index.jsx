@@ -45,7 +45,7 @@ function MenuCustom({isSignedIn, photoURL}) {
           photoURL={photoURL || anonymousAvatar}/>
       </MenuButton>
       <MenuList>
-      <MenuItem icon={<FaColumns/>} as={Link} to="/">
+        <MenuItem icon={<FaColumns/>} as={Link} to="/">
           Home
         </MenuItem>
         <MenuItem icon={<FaColumns/>} as={Link} to="/dashboard">
