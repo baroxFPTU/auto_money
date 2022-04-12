@@ -1,9 +1,9 @@
 import { Flex } from '@chakra-ui/react';
-import React from 'react';
-import Form from 'features/Expense/components/Form';
 import BudgetCategory from 'features/Expense/components/BudgetCategory';
+import Form from 'features/Expense/components/Form';
+import React from 'react';
 
-function Expenses(props) {
+function Expenses({isEditing, status}) {
   return (
     <>
     <Flex w="full" h="full" py={{base: 0, md: 10}} columnGap={12} direction={{base: "column", md: "row"}}>

@@ -18,7 +18,7 @@ function useFirestore(colName = 'expenses') {
   }, []);
 
   const getDocRef = (docId) => {
-    if (!docId) return null;
+    if (!docId && !user.uid) return null;
     return doc(dbFirestore ,`expenses/${user.uid}/lists`, docId);
   }
 

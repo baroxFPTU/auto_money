@@ -21,15 +21,20 @@ function useAuth(callback) {
   }, [user]);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unregistered =  onAuthStateChanged(auth, (user) => {
       if (!user) return;
+      console.log('sign in');
       const userData = {
         uid: user.uid,
         displayName: user.displayName,
         photoURL: user.photoURL,
       }
       setUser(userData);
-    })
+    });
+
+    return () => {
+      unregistered();
+    }
   }, []);
 
   const signIn = async (platform) => {

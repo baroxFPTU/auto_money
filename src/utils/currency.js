@@ -7,10 +7,15 @@ const formatCurrencies = (amount) => {
 }
 
 const getOriginal = (amount) => {
-  return +amount.replaceAll('.', "");
+  return +amount.replaceAll('.', "") || amount;
+}
+
+const calcMoneyFromPercent = (amount, percent) => {
+  return Math.trunc(getOriginal(amount)*percent/100);
 }
 
 export {
   formatCurrencies,
-  getOriginal
+  getOriginal,
+  calcMoneyFromPercent
 }

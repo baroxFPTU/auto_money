@@ -12,7 +12,7 @@
 3. Suggesting when user enter the number.
 2. Save & Check again follow month
 3. Suggest where to put money.
-
+4. hỗ trợ đa ngôn ngữ
 ## Logics
 ### Calculate & show amount after divide
 WHAT:
@@ -52,3 +52,14 @@ TODO 2022 04 04
 1. Fix the direction of menu popup.
 2. Them chuc nang add more custom field.
 3. 
+
+TODO 2022 04 06
+1. Thêm chức năng add more custom field.
+2. Thêm Chart
+
+- Create dashboard
+- View & edit saved Budget.
+
+
+## Bugs
+- Không thể lấy uid khi reload - vì cần thời gian để sign in

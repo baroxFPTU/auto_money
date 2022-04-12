@@ -1,8 +1,8 @@
 import { Box, Button, HStack, Input, VStack } from '@chakra-ui/react';
 import { CURRENCY_OPTIONS } from 'constant/global';
 import { updateBudget } from 'features/Expense/slice/expenseSlice';
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import useExpenseForm from 'store/hooks/useExpenseForm';
 import { formatCurrencies, getOriginal } from 'utils/currency';
 import CustomFormControl from '../CustomFormControl';
@@ -10,14 +10,19 @@ import CustomFormSelection from '../CustomFormSelection';
 import ExpenseInput from '../ExpenseInput';
 
 function Form(props) {
-  const { status, title, currency, updateTitle, updateCurrency, handleSubmit } = useExpenseForm();
-  const [budget, setBudget] = useState('');
+  const {
+    status,
+    title,
+    currency,
+    updateTitle,
+    updateCurrency,
+    handleSubmit
+  } = useExpenseForm();
+  const budget = useSelector(state => state.expense.budget);
   const dispatch = useDispatch();
   const handleChangeBudget = (budget) => {
-    const formatedBudget = formatCurrencies(budget);
-    const action = updateBudget(getOriginal(budget));
+    const action = updateBudget(formatCurrencies(budget));
     dispatch(action);
-    setBudget(formatedBudget);
   }
 
   useEffect(() => {
@@ -25,6 +30,8 @@ function Form(props) {
       handleChangeBudget('');
     }
   });
+
+  console.log(budget);
 
   return (
     <VStack w="full" justify="space-between" align="center" py={6} spacing={{base: 6, md: 40}}>

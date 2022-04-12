@@ -11,10 +11,10 @@ import { addConfig } from 'features/Expense/slice/expenseSlice';
 function BudgetCategory(props) {
   const budgetConfig = useSelector(state => state.expense.config);
   const currency = useSelector(state => state.expense.currency);
-  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
-  const inputRef = useRef();
   const { info } = useCustomToast();
+  const dispatch = useDispatch();
+  const inputRef = useRef();
 
   const handleClickAddButton = useCallback(() => {
     setIsEditing(true);
@@ -26,7 +26,6 @@ function BudgetCategory(props) {
 
   const handleSubmitAdd = useCallback(() => {
     const nameConfig = inputRef.current.value;
-    console.log(nameConfig);
     if (nameConfig === '') {
       return info({
         title: 'Tips',
