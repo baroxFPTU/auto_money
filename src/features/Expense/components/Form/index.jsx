@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Input, VStack } from '@chakra-ui/react';
+import { Box, Button, HStack, Input, useColorModeValue, VStack } from '@chakra-ui/react';
 import { CURRENCY_OPTIONS } from 'constant/global';
 import { updateBudget } from 'features/Expense/slice/expenseSlice';
 import React, { useEffect } from 'react';
@@ -8,6 +8,7 @@ import { formatCurrencies, getOriginal } from 'utils/currency';
 import CustomFormControl from '../CustomFormControl';
 import CustomFormSelection from '../CustomFormSelection';
 import ExpenseInput from '../ExpenseInput';
+import SaveMoneySVG from 'assets/illustrators/saveMoney.svg'
 
 function Form(props) {
   const {
@@ -20,18 +21,18 @@ function Form(props) {
   } = useExpenseForm();
   const budget = useSelector(state => state.expense.budget);
   const dispatch = useDispatch();
-  const handleChangeBudget = (budget) => {
+  const handleChangeBudget = (budget) => {  
     const action = updateBudget(formatCurrencies(budget));
     dispatch(action);
   }
+
+  const bgButton = useColorModeValue()
 
   useEffect(() => {
     if (status === 'reset') {
       handleChangeBudget('');
     }
   });
-
-  console.log(budget);
 
   return (
     <VStack w="full" justify="space-between" align="center" py={6} spacing={{base: 6, md: 40}}>
@@ -56,8 +57,9 @@ function Form(props) {
             options={CURRENCY_OPTIONS}/>
         </HStack>
       </VStack>
-      <Box w="full" pos={{base: "fixed", md: "relative"}} bottom="0" p={{base: 5, md: 0}}>
-        <Button size="lg" w="full" onClick={handleSubmit}>Save</Button>
+        <embed style={{ marginTop: '4rem', maxWidth: '300px'}} width="100%" src={SaveMoneySVG}/>
+      <Box w="full" pos={{base: "fixed", md: "relative"}} bottom="0" p={{base: 5, md: 0}} style={{marginTop: '2rem'}}>
+        <Button  colorScheme="brandPrimary" size="lg" w="full" onClick={handleSubmit} >Save</Button>
       </Box>
     </VStack>
   );

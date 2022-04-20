@@ -1,6 +1,6 @@
-import { Box, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { Avatar, Box, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import AvatarUser from 'components/AvatarUser';
-import { FaSignOutAlt, FaColumns, FaSignInAlt } from "react-icons/fa";
+import { FaHome, FaSignOutAlt, FaColumns, FaSignInAlt } from "react-icons/fa";
 
 import React from 'react';
 import useAuth from 'store/hooks/useAuth';
@@ -35,17 +35,16 @@ function MenuCustom({isSignedIn, photoURL}) {
         ms={0}
         style={{marginInlineStart: 0, userSelect: 'none'}}
         borderRadius="full"
-        border="2px"
-        borderStyle="solid"
-        borderColor="gray.400"
+        borderWidth="3px"
         cursor="pointer"
+        _focus={{
+          borderColor: "brand.400"
+        }}
       >
-        <AvatarUser
-          ms={0}
-          photoURL={photoURL || anonymousAvatar}/>
+        <Avatar colorScheme="brandPrimary" src={photoURL || anonymousAvatar }/>
       </MenuButton>
       <MenuList>
-        <MenuItem icon={<FaColumns/>} as={Link} to="/">
+        <MenuItem icon={<FaHome/>} as={Link} to="/">
           Home
         </MenuItem>
         <MenuItem icon={<FaColumns/>} as={Link} to="/dashboard">

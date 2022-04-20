@@ -14,7 +14,8 @@ function EditBudget(props) {
     const getDoc = async () => {
       const response = await getById(params.budgetId);
       const newData = response.data();
-
+      console.log(newData);
+      document.title = newData.title;
       const action = updateAll(newData.data);
       dispatch(action);
     }

@@ -1,18 +1,17 @@
+import { setCurrentTitle, updateCurrency } from "features/Expense/slice/expenseSlice";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
-
-import { updateBudget, updateCurrency } from "features/Expense/slice/expenseSlice";
 import { generateId, slugify } from "utils/main";
 import { dbFirestore } from "../../firebase";
 import { openModal } from '../slices/uiSlice';
 import useCustomToast from "./useCustomToast";
 import useFirestore from "./useFirestore";
 
+
 function useExpenseForm() {
   const dispatch = useDispatch();
-  const [title, setTitle] = useState('');
-  const {add: addDoc} = useFirestore('expenses');
+  const title = useSelector(state => state.expense.currentTitle);
   const expense = useSelector(state => state.expense);
   const {isSignedIn, user} = useSelector(state => state.auth);
   const { success, error: errorToast, info} = useCustomToast();
@@ -21,13 +20,14 @@ function useExpenseForm() {
   const handleChangeInfo = (e) => {
     const data = e.target.value;
     const key = e.target.name;
-
     if (key === 'currency') {
       const action = updateCurrency(data);
       dispatch(action);
       return;
     }
-    setTitle(data);
+    const action = setCurrentTitle(data);
+    dispatch(action);
+    document.title = data || '';
   }
 
   const handleSubmit = async (e) => {
@@ -51,8 +51,7 @@ function useExpenseForm() {
     }
 
     const id = `${slugify(title)}-${generateId()}`;
-    const data = {
-      title: title,
+    const newBudget = {
       id: id,  
       data: {
         ...expense
@@ -61,10 +60,11 @@ function useExpenseForm() {
     }
 
     try {
-      const docRef = doc(dbFirestore ,`expenses/${user.uid}/lists`, data.id);
-      await setDoc(docRef,data);
-
-      setTitle('');
+      const docRef = doc(dbFirestore ,`expenses/${user.uid}/lists`, newBudget.id);
+      console.log(docRef);
+      await setDoc(docRef, newBudget);
+      const action = setCurrentTitle('');
+      dispatch(action);
       setStatus('reset');
       success({
         title: 'Saved',

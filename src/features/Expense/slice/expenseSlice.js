@@ -4,6 +4,7 @@ import { BUDGET_CONFIG_DEFAULT } from "constant/global";
 const INITIAL_STATE = {
   budget: '',
   currency: 'VND',
+  currentTitle: '',
   config: [...BUDGET_CONFIG_DEFAULT]
 }
 
@@ -25,7 +26,7 @@ const expenseSlice = createSlice({
     },
     updateAll: (state, action) => {
       const data = action.payload;
-
+      state.currentTitle = data.currentTitle;
       state.budget = data.budget;
       state.currency = data.currency;
       state.config = [...data.config];
@@ -37,10 +38,23 @@ const expenseSlice = createSlice({
     resetAll: (state) => {
       state = {...INITIAL_STATE};
       return state;
+    },
+    setCurrentTitle: (state, action) => {
+      console.log(action.payload);
+      state.currentTitle = action.payload;
+      return state;
     }
   }
 });
 
 const { actions, reducer: expenseReducer} = expenseSlice;
-export const { updateBudget, updateCurrency, updateConfig, addConfig, updateAll, resetAll} = actions;
+export const {
+  updateBudget,
+  updateCurrency,
+  updateConfig,
+  addConfig,
+  updateAll,
+  resetAll,
+  setCurrentTitle
+} = actions;
 export default expenseReducer;

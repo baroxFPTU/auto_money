@@ -1,6 +1,6 @@
 import { Box, Divider, HStack, Text, VStack } from '@chakra-ui/react';
 import { updateConfig } from 'features/Expense/slice/expenseSlice';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { memo, useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { calcMoneyFromPercent, formatCurrencies, getOriginal } from 'utils/currency';
 import InputPercent from '../InputPercent';
@@ -25,7 +25,6 @@ function ExpenseItem({name, id, percent, currency}) {
     const action = updateConfig({id, percent: newPercent});
     dispatch(action);
   }
-  console.log(budget);
 
   const amount = budget ? calcMoneyFromPercent(budget, percent) : 0;
   const formatedAmount = amount.toLocaleString('it-IT', {style : 'currency', currency : currency || 'VND'});
@@ -44,4 +43,4 @@ function ExpenseItem({name, id, percent, currency}) {
   );
 }
 
-export default ExpenseItem;
+export default memo(ExpenseItem);

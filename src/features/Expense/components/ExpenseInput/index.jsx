@@ -6,6 +6,7 @@ function ExpenseInput({value, onChange}) {
 
   return (
    <NumberInput
+    colorScheme="brandPrimary"
     variant="filled"
     placeholder="Amount"
     w="full"

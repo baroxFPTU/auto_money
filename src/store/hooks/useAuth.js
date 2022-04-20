@@ -23,7 +23,7 @@ function useAuth(callback) {
   useEffect(() => {
     const unregistered =  onAuthStateChanged(auth, (user) => {
       if (!user) return;
-      console.log('sign in');
+      
       const userData = {
         uid: user.uid,
         displayName: user.displayName,

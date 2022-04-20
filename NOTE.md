@@ -6,7 +6,7 @@
 - add more options for budget.
 
 4. Login by Google || Facebook to save data.!! - done
-
+5. Error boundary
 ### Advance
 1. Visualize with chart
 3. Suggesting when user enter the number.
@@ -60,6 +60,19 @@ TODO 2022 04 06
 - Create dashboard
 - View & edit saved Budget.
 
+TODO
+2022 04 13
+1. edit mode for budget options
+2. update the budget (still not handle save & update).
+3. Update title when 
+
+- sign out
++ dashboard hiển thị những gì?
++ đang ở dashboard thì như thế nào?
+- thêm budget options
++ có nên để user thêm hơn 10 options?
++ ở mobile thì nên hiển thị thế nào cho hợp lí?
 
 ## Bugs
+- Have warning when open the popup menu.
 - Không thể lấy uid khi reload - vì cần thời gian để sign in

@@ -41,7 +41,7 @@ const Dashboard = () => {
               <TableBodyRow
                 key={index}
                 id={item.id}
-                name={item.title}
+                name={item.data.currentTitle}
                 amount={item.data.budget}
                 currency={item.data.currency}
                 createdAt={item.createAt.toDate()}
