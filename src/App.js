@@ -21,8 +21,8 @@ function App() {
   return (
   <Layout>
     <Routes>
+        <Route path="/" element={<Expense/>}/>
         <Route element={<PrivateRoute/>}>
-            <Route path="/" element={<Expense/>}/>
             <Route path="/dashboard" element={<Dashboard/>}/>
             <Route path="/budgets">
               <Route path=":budgetId" element={<EditBudget/>}/>

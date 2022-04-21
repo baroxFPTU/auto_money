@@ -58,8 +58,8 @@ function Form(props) {
         </HStack>
       </VStack>
         <embed style={{ marginTop: '4rem', maxWidth: '300px'}} width="100%" src={SaveMoneySVG}/>
-      <Box w="full" pos={{base: "fixed", md: "relative"}} bottom="0" p={{base: 5, md: 0}} style={{marginTop: '2rem'}}>
-        <Button  colorScheme="brandPrimary" size="lg" w="full" onClick={handleSubmit} >Save</Button>
+      <Box w="full" pos={{base: "fixed", md: "relative"}} zIndex="9" bottom="0" p={{base: 5, md: 0}} style={{marginTop: '2rem'}}>
+        <Button boxShadow="lg" colorScheme="brandPrimary" size="lg" w="full" onClick={handleSubmit} >Save</Button>
       </Box>
     </VStack>
   );

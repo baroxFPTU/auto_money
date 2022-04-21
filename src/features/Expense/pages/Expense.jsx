@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import BudgetCategory from 'features/Expense/components/BudgetCategory';
 import Form from 'features/Expense/components/Form';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useCustomToast from 'store/hooks/useCustomToast';
 import { generateId, normalize, slugify } from 'utils/main';
@@ -11,6 +11,10 @@ function Expenses(props) {
   const [isEditing, setIsEditing] = useState();
   const { info } = useCustomToast();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    document.title = "Auto Money | Plan Money - Plan Life"
+  }, []);
 
   const handleAddOption = useCallback((nameConfig, callback) => {
     if (nameConfig === '') {
@@ -36,7 +40,14 @@ function Expenses(props) {
 
   return (
     <>
-    <Flex w="full" h="full" py={{base: 0, md: 10}} columnGap={12} direction={{base: "column", md: "row"}}>
+    <Flex
+      w="full"
+      h="full"
+      py={{base: 0, md: 10}}
+      columnGap={12}
+      direction={{base: "column", md: "row"}}
+      mb={{base: "6rem", md: 0}}
+    >
       <Form/>
       <BudgetCategory
         isEditing={isEditing}

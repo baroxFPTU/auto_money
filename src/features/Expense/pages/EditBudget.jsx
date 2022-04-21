@@ -11,6 +11,10 @@ function EditBudget(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    document.title = "Edit your budget";
+  }, []);
+
+  useEffect(() => {
     const getDoc = async () => {
       const response = await getById(params.budgetId);
       const newData = response.data();

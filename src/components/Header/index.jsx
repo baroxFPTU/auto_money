@@ -15,14 +15,17 @@ function Header(props) {
 
   return (
     <Container w="full" maxW="container.xl">
-      <HStack w="full" justify="space-between" pt={{base: 10, md: 20}} pb={10}>
+      <HStack w="full" justify="space-between" pt={{base: 5, md: 20}} pb={{base: 5, md: 10}}>
         <Link to="/">
           <Heading size="xl">
             Auto Money
           </Heading>
         </Link>
           <HStack columnGap={4}>
-            <Switch colorScheme="brandPrimary" size="md" onChange={handleChangeColorMode}/>
+            <Switch
+              colorScheme="brandPrimary"
+              size="md" onChange={handleChangeColorMode}
+            />
             <MenuCustom marginLeft={10} isSignedIn={isSignedIn} photoURL={photoURL}/>
           </HStack>
       </HStack>

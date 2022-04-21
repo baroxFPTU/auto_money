@@ -29,19 +29,15 @@ function MenuCustom({isSignedIn, photoURL}) {
   const iconSignInOut = isSignedIn ? <FaSignOutAlt/> : <FaSignInAlt/>;
 
   return (
-    <Menu ms={0} placement="top" offset={[-85,10]} preventOverflow="false">
+    <Menu placement="top" offset={[-85,10]} preventOverflow="true">
       <MenuButton
         as={Box}
-        ms={0}
         style={{marginInlineStart: 0, userSelect: 'none'}}
         borderRadius="full"
         borderWidth="3px"
         cursor="pointer"
-        _focus={{
-          borderColor: "brand.400"
-        }}
       >
-        <Avatar colorScheme="brandPrimary" src={photoURL || anonymousAvatar }/>
+        <Avatar colorScheme="brandPrimary" bg="transparent" src={photoURL || anonymousAvatar }/>
       </MenuButton>
       <MenuList>
         <MenuItem icon={<FaHome/>} as={Link} to="/">
