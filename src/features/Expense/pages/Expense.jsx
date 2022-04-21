@@ -13,7 +13,7 @@ function Expenses(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    document.title = "Auto Money | Plan Money - Plan Life"
+    document.title = "Auto Money | Plan Money - Plan Life";
   }, []);
 
   const handleAddOption = useCallback((nameConfig, callback) => {

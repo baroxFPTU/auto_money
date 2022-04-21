@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Input, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Box, Button, HStack, Input, Show, useColorModeValue, VStack } from '@chakra-ui/react';
 import { CURRENCY_OPTIONS } from 'constant/global';
 import { updateBudget } from 'features/Expense/slice/expenseSlice';
 import React, { useEffect } from 'react';
@@ -35,7 +35,7 @@ function Form(props) {
   });
 
   return (
-    <VStack w="full" justify="space-between" align="center" py={6} spacing={{base: 6, md: 40}}>
+    <VStack w="full" justify="space-between" align="center" py={{base: 1, md: 6}} pb={{base: 3, md: 6}} spacing={{base: 6, md: 40}}>
       <VStack w="full" spacing={4}>
         <CustomFormControl label="Your money">
           <ExpenseInput value={budget} onChange={handleChangeBudget}/>
@@ -57,7 +57,9 @@ function Form(props) {
             options={CURRENCY_OPTIONS}/>
         </HStack>
       </VStack>
+      <Show above="md">
         <embed style={{ marginTop: '4rem', maxWidth: '300px'}} width="100%" src={SaveMoneySVG}/>
+      </Show>
       <Box w="full" pos={{base: "fixed", md: "relative"}} zIndex="9" bottom="0" p={{base: 5, md: 0}} style={{marginTop: '2rem'}}>
         <Button boxShadow="lg" colorScheme="brandPrimary" size="lg" w="full" onClick={handleSubmit} >Save</Button>
       </Box>
