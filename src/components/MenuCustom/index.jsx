@@ -1,54 +1,51 @@
-import { Avatar, Box, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import AvatarUser from 'components/AvatarUser';
-import { FaHome, FaSignOutAlt, FaColumns, FaSignInAlt } from "react-icons/fa";
-
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Avatar, Box, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { FaHome, FaSignOutAlt, FaColumns, FaSignInAlt } from 'react-icons/fa';
+import { FiSettings } from 'react-icons/fi';
+
 import useAuth from 'store/hooks/useAuth';
 import useCustomToast from 'store/hooks/useCustomToast';
-import { useDispatch } from 'react-redux';
-import { openModal } from 'store/slices/uiSlice';
+import AvatarUser from 'components/AvatarUser';
 import anonymousAvatar from 'icons/anonymous.svg';
-import { Link } from 'react-router-dom';
 
-function MenuCustom({isSignedIn, photoURL}) {
-  const dispatch = useDispatch();
-  const {success} = useCustomToast()
+function MenuCustom({ isSignedIn, photoURL }) {
+  const { success } = useCustomToast();
   const { signOut } = useAuth();
 
-  const handleClick = () => {
-    if (!isSignedIn) {
-      const action = openModal();
-      return dispatch(action);
-    } 
+  const handleLogout = () => {
     signOut();
     success({
+      id: 'sign-out',
       title: 'See you',
-      description: 'Sign out successful. Have a good day.'
+      description: 'Sign out successful. Have a good day.',
     });
-  }
-  const iconSignInOut = isSignedIn ? <FaSignOutAlt/> : <FaSignInAlt/>;
+  };
+  const iconSignInOut = isSignedIn ? <FaSignOutAlt /> : <FaSignInAlt />;
 
   return (
-    <Menu placement="top" offset={[-85,10]} preventOverflow="true">
+    <Menu placement='bottom' offset={[-85, 10]} preventOverflow='true'>
       <MenuButton
         as={Box}
-        style={{marginInlineStart: 0, userSelect: 'none'}}
-        borderRadius="full"
-        borderWidth="3px"
-        cursor="pointer"
+        style={{ marginInlineStart: 0, userSelect: 'none' }}
+        borderRadius='full'
+        borderWidth='3px'
+        cursor='pointer'
       >
-        <Avatar colorScheme="brandPrimary" bg="transparent" src={photoURL || anonymousAvatar }/>
+        <Avatar colorScheme='brandPrimary' bg='transparent' src={photoURL || anonymousAvatar} />
       </MenuButton>
       <MenuList>
-        <MenuItem icon={<FaHome/>} as={Link} to="/">
-          Home
-        </MenuItem>
-        <MenuItem icon={<FaColumns/>} as={Link} to="/dashboard">
-          Dashboard
-        </MenuItem>
-        <MenuItem icon={iconSignInOut} onClick={handleClick}>
-          {isSignedIn ? 'Sign out' : 'Sign in'}
-        </MenuItem>
+        {isSignedIn && (
+          <>
+            <MenuItem icon={<FiSettings />} as={Link} to='/settings'>
+              Settings
+            </MenuItem>
+            <MenuItem icon={iconSignInOut} onClick={handleLogout}>
+              Sign out
+            </MenuItem>
+          </>
+        )}
       </MenuList>
     </Menu>
   );

@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react';
 
 function useCustomToast(duration, isClosable) {
   const toast = useToast();
@@ -7,40 +7,58 @@ function useCustomToast(duration, isClosable) {
     variant: 'subtle',
     duration: duration || 2000,
     isClosable: isClosable || true,
-  }
+  };
 
-  const success = ({title, description}) => {
-    return toast({
-      ...defaultConfig,
-      status: 'success',
-      title: title,
-      description: description
-    });
-  }
+  const warning = ({ title, description, id }) => {
+    if (!toast.isActive(id))
+      return toast({
+        ...defaultConfig,
+        id: id,
+        status: 'warning',
+        title: title,
+        description: description,
+      });
+  };
 
-  const error = ({title, description}) => {
-    return toast({
-      ...defaultConfig,
-      status: 'error',
-      title: title,
-      description: description
-    });
-  }
+  const success = ({ title, description, id }) => {
+    if (!toast.isActive(id))
+      return toast({
+        ...defaultConfig,
+        id: id,
+        status: 'success',
+        title: title,
+        description: description,
+      });
+  };
 
-  const info = ({title, description}) => {
-    return toast({
-      ...defaultConfig,
-      status: 'info',
-      title: title,
-      description: description
-    });
-  }
+  const error = ({ title, description, id }) => {
+    if (!toast.isActive(id))
+      return toast({
+        ...defaultConfig,
+        id: id,
+        status: 'error',
+        title: title,
+        description: description,
+      });
+  };
+
+  const info = ({ title, description, id }) => {
+    if (!toast.isActive(id))
+      return toast({
+        ...defaultConfig,
+        id: id,
+        status: 'info',
+        title: title,
+        description: description,
+      });
+  };
 
   return {
     success,
     error,
-    info
-  }
+    info,
+    warning,
+  };
 }
 
 export default useCustomToast;

@@ -7,7 +7,7 @@ CustomFormSelection.propTypes = {
   label: PropTypes.string,
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
-  options: PropTypes.array
+  options: PropTypes.array,
 };
 
 CustomFormSelection.defaultProps = {
@@ -15,15 +15,25 @@ CustomFormSelection.defaultProps = {
   label: 'Selection',
   defaultValue: null,
   onChange: null,
-  options: []
-}
+  options: [],
+};
 
-function CustomFormSelection({name, label, defaultValue, onChange, options}) {
+function CustomFormSelection({ name, label, defaultValue, onChange, options, ...selectProps }) {
   return (
     <FormControl>
       <FormLabel>{label}</FormLabel>
-      <Select size="lg" name={name} onChange={onChange} defaultValue={defaultValue}>
-       {options.map((option, index)=> (<option key={index} value={option.value}>{option.label}</option>))}
+      <Select
+        size='lg'
+        name={name}
+        onChange={onChange}
+        defaultValue={defaultValue}
+        {...selectProps}
+      >
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </Select>
     </FormControl>
   );

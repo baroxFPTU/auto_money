@@ -1,21 +1,19 @@
 import { NumberInput, NumberInputField } from '@chakra-ui/react';
 import React from 'react';
-import { formatCurrencies } from 'utils/currency';
 
-function ExpenseInput({value, onChange}) {
-
+function ExpenseInput({ value, onChange, size = 'lg', placeholder }) {
   return (
-   <NumberInput
-    colorScheme="brandPrimary"
-    variant="filled"
-    placeholder="Amount"
-    w="full"
-    size="lg"
-    value={value}
-    onChange={onChange}
-    clampValueOnBlur={false}>
-     <NumberInputField/>
-   </NumberInput>
+    <NumberInput
+      colorScheme='brandPrimary'
+      placeholder={placeholder}
+      w='full'
+      size={size}
+      value={value}
+      onChange={onChange}
+      clampValueOnBlur={false}
+    >
+      <NumberInputField />
+    </NumberInput>
   );
 }
 

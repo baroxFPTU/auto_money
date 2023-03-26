@@ -1,15 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { BUDGET_CONFIG_DEFAULT } from "constant/global";
+import { createSlice } from '@reduxjs/toolkit';
+import { BUDGET_CONFIG_DEFAULT } from 'constant/global';
 
 const INITIAL_STATE = {
   budget: '',
   currency: 'VND',
   currentTitle: '',
-  config: [...BUDGET_CONFIG_DEFAULT]
-}
+  config: [...BUDGET_CONFIG_DEFAULT],
+  id: null,
+};
 
 const expenseSlice = createSlice({
-  name: "expense",
+  name: 'expense',
   initialState: INITIAL_STATE,
   reducers: {
     updateBudget: (state, action) => {
@@ -21,7 +22,7 @@ const expenseSlice = createSlice({
     updateConfig: (state, action) => {
       const expenseId = action.payload.id;
       const newPercent = action.payload.percent;
-      const expenseTarget = state.config.find(expense => expense.id === expenseId);
+      const expenseTarget = state.config.find((expense) => expense.id === expenseId);
       expenseTarget.percent = newPercent;
     },
     updateAll: (state, action) => {
@@ -30,24 +31,25 @@ const expenseSlice = createSlice({
       state.budget = data.budget;
       state.currency = data.currency;
       state.config = [...data.config];
+      state.id = data?.id;
     },
     addConfig: (state, action) => {
       const newConfig = action.payload;
       state.config.push(newConfig);
     },
     resetAll: (state) => {
-      state = {...INITIAL_STATE};
+      state = { ...INITIAL_STATE };
       return state;
     },
     setCurrentTitle: (state, action) => {
       console.log(action.payload);
       state.currentTitle = action.payload;
       return state;
-    }
-  }
+    },
+  },
 });
 
-const { actions, reducer: expenseReducer} = expenseSlice;
+const { actions, reducer: expenseReducer } = expenseSlice;
 export const {
   updateBudget,
   updateCurrency,
@@ -55,6 +57,6 @@ export const {
   addConfig,
   updateAll,
   resetAll,
-  setCurrentTitle
+  setCurrentTitle,
 } = actions;
 export default expenseReducer;
