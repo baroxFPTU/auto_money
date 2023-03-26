@@ -5,41 +5,45 @@ import { useDispatch, useSelector } from 'react-redux';
 import { calcMoneyFromPercent, formatCurrencies, getOriginal } from 'utils/currency';
 import InputPercent from '../InputPercent';
 
-function ExpenseItem({name, id, percent, currency}) {
-  const budget = useSelector(state => state.expense.budget);
-  const config = useSelector(state => state.expense.config);
+function ExpenseItem({ name, id, percent, currency }) {
+  const budget = useSelector((state) => state.expense.budget);
+  const config = useSelector((state) => state.expense.config);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
   const handleChangePercent = (percent, setPercent) => {
     const newPercent = +percent;
-    const expenseTarget = config.find(expense => expense.id === id);
-    const totalPercent = config.reduce((acc, curr) => acc + curr.percent,0);
+    const expenseTarget = config.find((expense) => expense.id === id);
+    const totalPercent = config.reduce((acc, curr) => acc + curr.percent, 0);
     const rest = newPercent - expenseTarget.percent;
 
     if (totalPercent + rest > 100) {
       setPercent(expenseTarget.percent);
       return;
     }
-    
-    const action = updateConfig({id, percent: newPercent});
+
+    const action = updateConfig({ id, percent: newPercent });
     dispatch(action);
-  }
+  };
 
   const amount = budget ? calcMoneyFromPercent(budget, percent) : 0;
-  const formatedAmount = amount.toLocaleString('it-IT', {style : 'currency', currency : currency || 'VND'});
+  const formattedAmount = amount.toLocaleString('it-IT', {
+    style: 'currency',
+    currency: currency || 'VND',
+  });
 
   return (
-    <VStack w="full" align="flex-start" p={4} spacing={3}>
-    <HStack w="full"  justify="space-between">
-      <Box>
-        <Text fontSize="xl">{name}</Text>
-        <Text fontSize="2xl" as="b">{formatedAmount}</Text>
-      </Box>
-      <InputPercent ref={inputRef} percent={percent} handleChange={handleChangePercent}/>
-    </HStack>
-    <Divider/>
-  </VStack>
+    <VStack w='full' align='flex-start' py={4} px={6} spacing={3}>
+      <HStack w='full' justify='space-between'>
+        <Box>
+          <Text fontSize='xl'>{name}</Text>
+          <Text fontSize='2xl' as='b'>
+            {formattedAmount}
+          </Text>
+        </Box>
+        <InputPercent ref={inputRef} percent={percent} handleChange={handleChangePercent} />
+      </HStack>
+    </VStack>
   );
 }
 

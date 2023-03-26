@@ -1,6 +1,14 @@
-import { signOutLocal } from 'features/Auth/authSlice';
-import { FacebookAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { signOutLocal, startPending, stopPending } from 'features/Auth/authSlice';
+import {
+  FacebookAuthProvider,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
 import { useCallback, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { useDispatch } from 'react-redux';
 
 function useAuth(callback) {
@@ -21,25 +29,26 @@ function useAuth(callback) {
   }, [user]);
 
   useEffect(() => {
-    const unregistered =  onAuthStateChanged(auth, (user) => {
+    const unregistered = onAuthStateChanged(auth, (user) => {
       if (!user) return;
-      
+      console.log({ user, message: 'try' });
       const userData = {
         uid: user.uid,
         displayName: user.displayName,
         photoURL: user.photoURL,
-      }
+      };
       setUser(userData);
+      dispatch(stopPending());
     });
 
     return () => {
       unregistered();
-    }
+    };
   }, []);
 
   const signIn = async (platform) => {
     let provider = null;
-
+    dispatch(startPending());
     switch (platform) {
       case 'google':
         provider = googleProvider;
@@ -57,24 +66,26 @@ function useAuth(callback) {
     } catch (error) {
       setError(error.message);
     }
-  }
+    dispatch(stopPending());
+  };
 
   const signInWithGoogle = useCallback(async () => {
     signIn('google');
-  },[]);
+  }, []);
 
   const signInWithFacebook = useCallback(async () => {
     signIn('facebook');
   }, []);
 
   const signOutBoth = useCallback(async () => {
-    console.log('sign out');
+    dispatch(startPending());
     const response = await signOut(auth);
     const action = signOutLocal();
     dispatch(action);
+    dispatch(stopPending());
   }, []);
-  
-  return {user, error, signInWithGoogle, signInWithFacebook, signOut: signOutBoth};
+
+  return { user, error, signInWithGoogle, signInWithFacebook, signOut: signOutBoth };
 }
 
 export default useAuth;

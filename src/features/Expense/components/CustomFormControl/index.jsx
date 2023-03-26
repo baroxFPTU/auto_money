@@ -1,14 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { FormControl, FormLabel } from '@chakra-ui/react';
 
-CustomFormControl.propTypes = {
-  
-};
+CustomFormControl.propTypes = {};
 
-function CustomFormControl({label, children}) {
+function CustomFormControl({ label, children, ...props }) {
   return (
-    <FormControl>
+    <FormControl {...props}>
       <FormLabel>{label}</FormLabel>
       {children}
     </FormControl>
